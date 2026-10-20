@@ -1,0 +1,331 @@
+// Cadenza theme: ink navy + warm brass, built on Bootstrap 5.
+$primary: #1f2f57;
+$secondary: #5b6478;
+$success: #1e6b47;
+$info: #1d5f7a;
+$warning: #a8670f;
+$danger: #a3262a;
+$light: #f6f2ea;
+$dark: #141c33;
+$body-bg: #fbf9f5;
+$body-color: #1d2333;
+$link-color: #1f2f57;
+$border-radius: 0.6rem;
+$border-radius-lg: 0.9rem;
+$font-family-sans-serif: 'Atkinson Hyperlegible', system-ui, -apple-system,
+  'Segoe UI', Roboto, sans-serif;
+$headings-font-family: 'Fraunces', Georgia, serif;
+$headings-font-weight: 600;
+$enable-shadows: false;
+$focus-ring-width: 0.25rem;
+$focus-ring-opacity: 0.4;
+$min-contrast-ratio: 4.5;
+
+@import 'bootstrap/scss/bootstrap';
+
+:root {
+  --cz-brass: #c9952f;
+  --cz-brass-soft: #f3e6c8;
+  --cz-ink: #1f2f57;
+  --cz-paper: #fbf9f5;
+  --cz-line: #e6e0d4;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+// Visible, consistent keyboard focus everywhere
+:focus-visible {
+  outline: 3px solid var(--cz-brass);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: $dark;
+  color: #fff;
+  border-radius: $border-radius;
+  &:focus {
+    top: 1rem;
+  }
+}
+
+.text-brass {
+  color: #8a5d0c;
+}
+.bg-brass-soft {
+  background: var(--cz-brass-soft);
+}
+.bg-paper {
+  background: var(--cz-paper);
+}
+.font-display {
+  font-family: $headings-font-family;
+}
+.eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #8a5d0c;
+}
+
+// ---------- Landing ----------
+.hero {
+  background:
+    radial-gradient(circle at 85% 10%, rgba(201, 149, 47, 0.18), transparent 45%),
+    linear-gradient(180deg, #fbf9f5 0%, #f4efe4 100%);
+}
+.hero-title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.hero-figure {
+  border-radius: 1.25rem;
+  box-shadow: 0 30px 60px -30px rgba(20, 28, 51, 0.55);
+  transform: rotate(1.2deg);
+}
+.staff-lines {
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 9px,
+    rgba(31, 47, 87, 0.12) 9px,
+    rgba(31, 47, 87, 0.12) 10px
+  );
+  height: 50px;
+}
+.feature-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 0.75rem;
+  background: var(--cz-brass-soft);
+  color: $primary;
+}
+
+// ---------- App shell ----------
+.app-sidebar {
+  background: $dark;
+  color: #e9ecf5;
+  min-height: 100vh;
+  width: 16rem;
+  flex-shrink: 0;
+  .nav-link {
+    color: #cfd5e6;
+    border-radius: $border-radius;
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0.55rem 0.8rem;
+    &:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+    }
+    &.active {
+      background: rgba(201, 149, 47, 0.18);
+      color: #fff;
+      box-shadow: inset 3px 0 0 var(--cz-brass);
+    }
+  }
+}
+.brand-mark {
+  font-family: $headings-font-family;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.app-main {
+  min-width: 0;
+}
+@include media-breakpoint-up(lg) {
+  .app-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+@include media-breakpoint-down(lg) {
+  .app-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1045;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    &.open {
+      transform: none;
+    }
+  }
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1040;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-sidebar {
+    transition: none;
+  }
+}
+
+.stat-card {
+  border: 1px solid var(--cz-line);
+  .stat-value {
+    font-family: $headings-font-family;
+    font-size: 2rem;
+    line-height: 1;
+  }
+}
+.card {
+  border-color: var(--cz-line);
+}
+
+// ---------- Native <dialog> modal ----------
+dialog.cz-dialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  width: min(40rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  &::backdrop {
+    background: rgba(20, 28, 51, 0.55);
+  }
+  // Bootstrap scopes its --bs-modal-* variables to .modal, which this native
+  // dialog doesn't use, so set the panel's surface explicitly.
+  .modal-content {
+    max-height: calc(100vh - 2rem);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    color: var(--bs-body-color);
+    border: var(--bs-border-width) solid var(--bs-border-color-translucent);
+    border-radius: var(--bs-border-radius-lg);
+    overflow: hidden;
+  }
+  .modal-header,
+  .modal-footer {
+    padding: 1rem;
+    border-color: var(--bs-border-color);
+  }
+  .modal-header {
+    border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+  }
+  .modal-footer {
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
+    gap: 0.5rem;
+  }
+  .modal-body {
+    padding: 1rem;
+  }
+  .modal-body {
+    overflow-y: auto;
+  }
+}
+
+// ---------- Calendar ----------
+.cal-grid {
+  table-layout: fixed;
+  th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $secondary;
+    font-weight: 700;
+    text-align: center;
+  }
+  td {
+    height: 7.5rem;
+    vertical-align: top;
+    padding: 0.35rem;
+    background: #fff;
+  }
+  td.outside {
+    background: #f5f3ee;
+    color: #6c7385;
+  }
+  td.holiday {
+    background: repeating-linear-gradient(
+      135deg,
+      #fbf3e1,
+      #fbf3e1 8px,
+      #f6ead0 8px,
+      #f6ead0 16px
+    );
+  }
+  td.today .day-num {
+    background: $primary;
+    color: #fff;
+  }
+}
+.day-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.lesson-chip {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  padding: 0.2rem 0.4rem;
+  margin-top: 0.2rem;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  border-left: 3px solid $primary;
+  background: #eef1f8;
+  color: $dark;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover {
+    background: #dfe5f3;
+  }
+  &.att-present {
+    border-left-color: $success;
+  }
+  &.att-absent {
+    border-left-color: $danger;
+    text-decoration: line-through;
+  }
+  &.att-late {
+    border-left-color: $warning;
+  }
+  &.att-cancelled {
+    border-left-color: $secondary;
+    opacity: 0.75;
+  }
+}
+.legend-swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 0.2rem;
+  vertical-align: -0.1rem;
+}
+
+// ---------- DataTables tweaks ----------
+.dt-container {
+  .dt-search input {
+    min-width: 14rem;
+  }
+}
+table.dataTable thead th {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $secondary;
+}
+
+.note-card textarea {
+  min-height: 9rem;
+}
